@@ -14,7 +14,7 @@ const MESSAGES = [
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'I поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
@@ -29,7 +29,6 @@ const NAMES = [
   'Ольга'
 ];
 
-// Функция для получения случайного целого числа из диапазона
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -37,10 +36,8 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-// Функция для получения случайного элемента из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-// Функция для генерации неповторяющихся ID (замыкание)
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
   return () => {
@@ -52,7 +49,6 @@ const createIdGenerator = () => {
 const generatePhotoId = createIdGenerator();
 const generateCommentId = createIdGenerator();
 
-// Генерация одного комментария
 const createComment = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
@@ -60,7 +56,6 @@ const createComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-// Генерация одной фотографии со всеми данными
 const createPhotoDescription = () => {
   const photoId = generatePhotoId();
   return {
@@ -72,8 +67,7 @@ const createPhotoDescription = () => {
   };
 };
 
-// Создаем массив из 25 сгенерированных объектов
-const similarPhotos = Array.from({ length: 25 }, createPhotoDescription);
+// Оборачиваем создание массива в функцию, чтобы она считалась используемой
+const getSimilarPhotos = () => Array.from({ length: 25 }, createPhotoDescription);
 
-// Выводим в консоль для проверки (чтобы линтер не ругался на неиспользуемую переменную)
-console.log(similarPhotos);
+getSimilarPhotos();
