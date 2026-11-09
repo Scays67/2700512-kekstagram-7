@@ -1,18 +1,16 @@
-// 1. Функция для проверки длины строки
-const checkStringLength = (string, maxLength) => string.length <= maxLength;
-
-checkStringLength('проверяемая строка', 20);
-
-// 2. Функция для проверки, является ли строка палиндромом
-const isPalindrome = (string) => {
-  const normalizedString = string.replaceAll(' ', '').toLowerCase();
-  let reversedString = '';
-
-  for (let i = normalizedString.length - 1; i >= 0; i--) {
-    reversedString += normalizedString.at(i);
-  }
-
-  return normalizedString === reversedString;
+const convertToMinutes = (timeString) => {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  return hours * 60 + minutes;
 };
 
-isPalindrome('топот');
+const checkMeetingTime = (workDayStart, workDayEnd, meetingStart, meetingDuration) => {
+  const workStartMin = convertToMinutes(workDayStart);
+  const workEndMin = convertToMinutes(workDayEnd);
+  const meetingStartMin = convertToMinutes(meetingStart);
+  const meetingEndMin = meetingStartMin + meetingDuration;
+
+  return meetingStartMin >= workStartMin && meetingEndMin <= workEndMin;
+};
+
+// Вызываем функцию, чтобы линтер не ругался на то, что она не используется
+checkMeetingTime('08:00', '17:30', '14:00', 90);
